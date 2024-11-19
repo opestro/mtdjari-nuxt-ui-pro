@@ -16,6 +16,14 @@ export default defineNuxtConfig({
   colorMode: {
     disableTransition: true
   },
+  strapi : {
+    url: process.env.STRAPI_URL || 'https://strapi-dash.mtdjari.com',
+    prefix: '/api',
+    admin: '/admin',
+    version: 'v5',
+    // cookie: {},
+    // cookieName: 'strapi_jwt'
+  },
 
   routeRules: {
     // Temporary workaround for prerender regression. see https://github.com/nuxt/nuxt/issues/27490

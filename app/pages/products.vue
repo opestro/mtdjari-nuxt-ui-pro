@@ -1,62 +1,69 @@
-<script setup lang="ts">
-import type { User } from '~/types'
+<script setup >
+
+const { find } = useStrapi()
+
 
 const defaultColumns = [{
-  key: 'id',
-  label: '#'
+  key: 'image',
+  label: 'Image'
 }, {
   key: 'name',
   label: 'Name',
   sortable: true
 }, {
-  key: 'email',
-  label: 'Email',
+  key: 'price',
+  label: 'Price/Quantity'
+}, {
+  key: 'sales',
+  label: 'Sales',
   sortable: true
 }, {
-  key: 'location',
-  label: 'Location'
-}, {
-  key: 'status',
-  label: 'Status'
+  key: 'action',
+  label: 'Action'
 }]
 
 const q = ref('')
-const selected = ref<User[]>([])
+const selected = ref([])
 const selectedColumns = ref(defaultColumns)
 const selectedStatuses = ref([])
 const selectedLocations = ref([])
-const sort = ref({ column: 'id', direction: 'asc' as const })
-const input = ref<{ input: HTMLInputElement }>()
+const sort = ref({ column: 'id', direction: 'asc'  })
+const input = ref()
 const isNewUserModalOpen = ref(false)
 
 const columns = computed(() => defaultColumns.filter(column => selectedColumns.value.includes(column)))
 
-const query = computed(() => ({ q: q.value, statuses: selectedStatuses.value, locations: selectedLocations.value, sort: sort.value.column, order: sort.value.direction }))
+// const query = computed(() => ({ q: q.value, statuses: selectedStatuses.value, locations: selectedLocations.value, sort: sort.value.column, order: sort.value.direction }))
 
-const { data: users, pending } = await useFetch<User[]>('/api/users', { query, default: () => [] })
 
-const defaultLocations = users.value.reduce((acc, user) => {
-  if (!acc.includes(user.location)) {
-    acc.push(user.location)
-  }
-  return acc
-}, [] as string[])
+const products = await findOne('products',{
+    populate: {
+        images: true,
+    }
+})
+// console.log(response)
+// const defaultLocations = users.value.reduce((acc, user) => {
+//   if (!acc.includes(user.location)) {
+//     acc.push(user.location)
+//   }
+//   return acc
+// }, [] as string[])
 
-const defaultStatuses = users.value.reduce((acc, user) => {
-  if (!acc.includes(user.status)) {
-    acc.push(user.status)
-  }
-  return acc
-}, [] as string[])
+// const defaultStatuses = users.value.reduce((acc, user) => {
+//   if (!acc.includes(user.status)) {
+//     acc.push(user.status)
+//   }
+//   return acc
+// }, [] as string[])
 
-function onSelect(row: User) {
-  const index = selected.value.findIndex(item => item.id === row.id)
-  if (index === -1) {
-    selected.value.push(row)
-  } else {
-    selected.value.splice(index, 1)
-  }
-}
+// function onSelect(row: User) {
+//   const index = selected.value.findIndex(item => item.id === row.id)
+//   if (index === -1) {
+//     selected.value.push(row)
+//   } else {
+//     selected.value.splice(index, 1)
+//   }
+// }
 
 defineShortcuts({
   '/': () => {
@@ -70,7 +77,7 @@ defineShortcuts({
     <UDashboardPanel grow>
       <UDashboardNavbar
         title="Users"
-        :badge="users.length"
+        :badge="products.data.length"
       >
         <template #right>
           <UInput
@@ -136,14 +143,14 @@ defineShortcuts({
         description="Add a new user to your database"
         :ui="{ width: 'sm:max-w-md' }"
       >
-        <!-- ~/components/users/UsersForm.vue -->
-        <UsersForm @close="isNewUserModalOpen = false" />
+        <!-- ~/components/products/ProductsForm.vue -->
+        <ProductsForm @close="isNewUserModalOpen = false" />
       </UDashboardModal>
 
       <UTable
         v-model="selected"
         v-model:sort="sort"
-        :rows="users"
+        :rows="products.data"
         :columns="columns"
         :loading="pending"
         sort-mode="manual"
@@ -163,14 +170,13 @@ defineShortcuts({
           </div>
         </template>
 
-        <template #status-data="{ row }">
+        <!-- <template #status-data="{ row }">
           <UBadge
-            :label="row.status"
-            :color="row.status === 'subscribed' ? 'green' : row.status === 'bounced' ? 'orange' : 'red'"
+            :label="row.action"
             variant="subtle"
             class="capitalize"
           />
-        </template>
+        </template> -->
       </UTable>
     </UDashboardPanel>
   </UDashboardPage>
