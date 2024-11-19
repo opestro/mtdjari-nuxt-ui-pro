@@ -2,12 +2,7 @@
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/ui',
-    '@vueuse/nuxt'
-  ],
+  modules: ['@nuxt/fonts', '@nuxt/ui', '@vueuse/nuxt', '@nuxtjs/strapi'],
 
   ui: {
     safelistColors: ['primary', 'red', 'orange', 'green']
@@ -16,7 +11,7 @@ export default defineNuxtConfig({
   colorMode: {
     disableTransition: true
   },
-  strapi : {
+  strapi: {
     url: process.env.STRAPI_URL || 'https://strapi-dash.mtdjari.com',
     prefix: '/api',
     admin: '/admin',

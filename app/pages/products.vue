@@ -1,6 +1,6 @@
 <script setup >
 
-const { find } = useStrapi()
+const { findOne } = useStrapi()
 
 
 const defaultColumns = [{
@@ -29,7 +29,7 @@ const selectedStatuses = ref([])
 const selectedLocations = ref([])
 const sort = ref({ column: 'id', direction: 'asc'  })
 const input = ref()
-const isNewUserModalOpen = ref(false)
+const isNewProductModalOpen = ref(false)
 
 const columns = computed(() => defaultColumns.filter(column => selectedColumns.value.includes(column)))
 
@@ -76,7 +76,7 @@ defineShortcuts({
   <UDashboardPage>
     <UDashboardPanel grow>
       <UDashboardNavbar
-        title="Users"
+        title="Products"
         :badge="products.data.length"
       >
         <template #right>
@@ -95,10 +95,10 @@ defineShortcuts({
           </UInput>
 
           <UButton
-            label="New user"
+            label="New product"
             trailing-icon="i-heroicons-plus"
             color="gray"
-            @click="isNewUserModalOpen = true"
+            @click="isNewProductModalOpen = true"
           />
         </template>
       </UDashboardNavbar>
@@ -138,13 +138,13 @@ defineShortcuts({
       </UDashboardToolbar>
 
       <UDashboardModal
-        v-model="isNewUserModalOpen"
-        title="New user"
-        description="Add a new user to your database"
+        v-model="isNewProductModalOpen"
+        title="New product"
+        description="Add a new product to your store"
         :ui="{ width: 'sm:max-w-md' }"
       >
         <!-- ~/components/products/ProductsForm.vue -->
-        <ProductsForm @close="isNewUserModalOpen = false" />
+        <ProductsProductForm @close="isNewProductModalOpen = false" ></ProductsProductForm>
       </UDashboardModal>
 
       <UTable
