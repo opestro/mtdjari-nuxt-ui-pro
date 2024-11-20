@@ -12,17 +12,29 @@ const links = [{
     text: 'Home',
     shortcuts: ['G', 'H']
   }
-}, {
-  id: 'inbox',
-  label: 'Inbox',
+},
+// }, {
+//   id: 'inbox',
+//   label: 'Inbox',
+//   icon: 'i-heroicons-inbox',
+//   to: '/inbox',
+//   badge: '4',
+//   tooltip: {
+//     text: 'Inbox',
+//     shortcuts: ['G', 'I']
+//   }
+// },
+{
+  id: 'pos',
+  label: 'POS',
   icon: 'i-heroicons-inbox',
-  to: '/inbox',
-  badge: '4',
-  tooltip: {
-    text: 'Inbox',
-    shortcuts: ['G', 'I']
-  }
-}, {
+  to: '/pos',
+  // tooltip: {
+  //   text: 'Inbox',
+  //   shortcuts: ['G', 'I']
+  // }
+},
+{
   id: 'products',
   label: 'Products',
   icon: 'i-heroicons-user-group',

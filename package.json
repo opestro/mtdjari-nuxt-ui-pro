@@ -15,6 +15,8 @@
     "@iconify-json/heroicons": "^1.2.1",
     "@iconify-json/simple-icons": "^1.2.9",
     "@nuxt/fonts": "^0.10.0",
+    "@nuxt/icon": "^1.8.1",
+    "@nuxt/image": "^1.8.1",
     "@nuxt/ui-pro": "^1.4.4",
     "@nuxtjs/strapi": "^2.0.0",
     "@unovis/ts": "^1.4.4",

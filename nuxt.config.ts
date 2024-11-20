@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   extends: ['@nuxt/ui-pro'],
 
-  modules: ['@nuxt/fonts', '@nuxt/ui', '@vueuse/nuxt', '@nuxtjs/strapi'],
+  modules: ['@nuxt/fonts', '@nuxt/ui', '@vueuse/nuxt', '@nuxtjs/strapi', '@nuxt/image', '@nuxt/icon'],
 
   ui: {
     safelistColors: ['primary', 'red', 'orange', 'green']
@@ -37,14 +37,14 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
-    }
-  },
+  // eslint: {
+  //   config: {
+  //     stylistic: {
+  //       commaDangle: 'never',
+  //       braceStyle: '1tbs'
+  //     }
+  //   }
+  // },
 
   compatibilityDate: '2024-07-11'
 })

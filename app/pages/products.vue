@@ -1,13 +1,15 @@
 <script setup >
 
 const { findOne } = useStrapi()
+const mediaUrl = useStrapiMedia()
 
+console.log(mediaUrl)
 
 const defaultColumns = [{
-  key: 'image',
+  key: 'images',
   label: 'Image'
 }, {
-  key: 'name',
+  key: 'title',
   label: 'Name',
   sortable: true
 }, {
@@ -41,6 +43,7 @@ const products = await findOne('products',{
         images: true,
     }
 })
+console.log(products)
 // console.log(response)
 // const defaultLocations = users.value.reduce((acc, user) => {
 //   if (!acc.includes(user.location)) {
@@ -161,12 +164,31 @@ defineShortcuts({
         <template #name-data="{ row }">
           <div class="flex items-center gap-3">
             <UAvatar
-              v-bind="row.avatar"
+              v-bind="row.images[0]"
               :alt="row.name"
               size="xs"
             />
 
-            <span class="text-gray-900 dark:text-white font-medium">{{ row.name }}</span>
+            <span class="text-gray-900 dark:text-white font-medium">{{ row.title }}</span>
+          </div>
+        </template>
+        <template #images-data="{ row }">
+          <div class="flex items-center gap-3">
+            <NuxtImg :src="mediaUrl+row.images[0].url" class="w-10"></NuxtImg>
+          </div>
+        </template>
+        <template #price-data="{ row }">
+          <div class="grid  items-center gap-3">
+            <span class="text-gray-900 dark:text-white font-medium">{{ row.price + ' DA'}}</span>
+            <span v-if="row.stock > 10 " class="bg-green-500 w-fit px-1 text-white rounded-lg    font-medium">{{   row.stock + ' pcs in stock' }}</span>
+            <span v-if="row.stock <= 10  && row.stock != 0" class="bg-yellow-500 w-fit px-1 text-white rounded-lg    font-medium">{{   row.stock + ' pcs in stock' }}</span>
+            <span v-if="row.stock == 0" class="bg-red-500 w-fit px-1 text-white rounded-lg    font-medium">{{   row.stock +'pcs out of stock' }}</span>
+          </div>
+        </template>
+        <template #action-data="{row}">
+          <div class="flex  items-center gap-3">
+          <button> <Icon name="solar:pen-new-round-linear" class=" w-8 h-8"></Icon> </button>
+          <button> <Icon name="solar:trash-bin-trash-bold" class=" w-8 h-8"></Icon> </button>
           </div>
         </template>
 
